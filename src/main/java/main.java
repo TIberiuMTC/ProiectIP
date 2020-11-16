@@ -11,6 +11,12 @@ class main {
         System.out.println(_test_product_3.details_returner());
         System.out.println();
 
+        Store _test_store_1=new Store(_test_product_1,"Complex Vitan","Soseaua Vitan Nr 8.");
+        _test_store_1.add_product(_test_product_2);
+        _test_store_1.add_product(_test_product_3);
+
+        System.out.println(_test_store_1.stock_display());
+
         System.out.println("Options:");
         System.out.println("0. Exit program");
         System.out.println("1. Log in");
