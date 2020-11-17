@@ -1,3 +1,5 @@
+import java.io.*;
+
 public class Client {
     private String mNume;
     private String mPrenume;
@@ -23,6 +25,16 @@ public class Client {
         this.mPassword = c.mPassword;
     }
 
+    public int getMoney(){
+        return this.mSumaBani;
+    }
+    public String getUsername(){
+        return this.mUsername;
+    }
+    public void setMoney(int sum){
+        this.mSumaBani = sum;
+    }
+
     @Override
     public String toString() {
         return "Client {" +
@@ -43,8 +55,55 @@ public class Client {
     public void removeEverythingFromCart(){
         this.mCart.removeAllProducts();
     }
+
+    private void updateMoney(int sum)
+    {
+        File fileToBeModified = new File("resources/users.txt");
+
+        String content = "";
+
+        BufferedReader reader = null;
+        FileWriter writer = null;
+
+        try {
+            reader = new BufferedReader(new FileReader(fileToBeModified));
+            String line = reader.readLine();
+
+            while (line != null) {
+                String[] creds = line.split("\t");
+
+                if(creds[0].equals(this.mUsername))
+                    line = line.replaceAll("\t" + this.mSumaBani, "\t" + sum);
+
+                content = content + line + System.lineSeparator();
+                line = reader.readLine();
+            }
+
+            writer = new FileWriter(fileToBeModified);
+            writer.write(content);
+
+            this.mSumaBani = sum;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try {
+                reader.close();
+                writer.close();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void addMoney(int sum){
-        mSumaBani += sum;
+        int money = this.mSumaBani + sum;
+
+        this.updateMoney(money);
+
         System.out.println("Money added to pocket!");
     }
 
@@ -55,7 +114,8 @@ public class Client {
             return;
         }
 
-        mSumaBani -= cost;
+        int money = this.mSumaBani - cost;
+        this.updateMoney(money);
         this.removeEverythingFromCart();
         System.out.println("The products were bought successfully!");
     }
