@@ -11,7 +11,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class UserManager {
-    public static Client mClient;
+    public static User mUser;
 
     private static String hashThisString(String input)
     {
@@ -51,7 +51,7 @@ public class UserManager {
         System.out.print("Password: ");
         String password = credentials_scanner.nextLine();
 
-        return checkCredentials(username, password);
+        return checkCredentials(username, password, false);
     }
 
     public static boolean LogInAdmin(){
@@ -86,10 +86,10 @@ public class UserManager {
             System.out.println("Invalid admin user!");
             return false;
         }
-        return checkCredentials(username, password);
+        return checkCredentials(username, password, isAdmin);
     }
 
-    private static boolean checkCredentials(String username, String password){
+    private static boolean checkCredentials(String username, String password, boolean isAdmin){
 
         try {
             File fObj = new File("resources/users.txt");
@@ -97,9 +97,16 @@ public class UserManager {
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
                 String[] creds = line.split("\t");
-                if(creds[0].equals(username) && creds[1].equals(hashThisString(password))) {
-                    mClient = new Client(creds[2], creds[3], Integer.parseInt(creds[4]), creds[0], creds[1]);
-                    return true;
+                if(isAdmin == true) {
+                    if (creds[0].equals(username) && creds[1].equals(hashThisString(password))){
+                        mUser = new Admin(username, password);
+                        return true;
+                    }
+                }else {
+                    if (creds[0].equals(username) && creds[1].equals(hashThisString(password))) {
+                        mUser = new Client(creds[2], creds[3], Integer.parseInt(creds[4]), creds[0], creds[1]);
+                        return true;
+                    }
                 }
             }
             myReader.close();
@@ -158,7 +165,7 @@ public class UserManager {
             FileWriter fw = new FileWriter("resources/users.txt", true);
             fw.write(username + "\t" + hashThisString(password) + "\t" + nume + "\t" + prenume + "\t" + "0\n");
             fw.close();
-            mClient = new Client(nume, prenume,0, username, hashThisString(password));
+            mUser = new Client(nume, prenume,0, username, hashThisString(password));
             return true;
         }
         catch (IOException e) {

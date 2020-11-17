@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 class main {
-    public static Client Login_prompt()
+    public static User Login_prompt()
     {
         System.out.println("Options:");
         System.out.println("0. Exit program");
@@ -37,7 +37,11 @@ class main {
         }
         System.out.println();
 
-        return new Client(UserManager.mClient);
+        if(UserManager.mUser.isAdmin){
+            return (Admin)(UserManager.mUser);
+        }else{
+            return (Client)(UserManager.mUser);
+        }
     }
 
     public static Store Stores_prompt(Client client, ArrayList<Store> stores)
@@ -153,20 +157,92 @@ class main {
         _stores.add(_test_store_2);
 
         boolean _done = false;
-        while(!_done){
-            Client _client = Login_prompt();
-            System.out.println(_client.toString());
-            System.out.println();
+        while(!_done) {
+            User user = Login_prompt();
+            if (user.isAdmin) {
+                Admin admin = (Admin) user;
 
-            Store _store = Stores_prompt(_client, _stores);
-            if(_store == null)
-                continue;
-            System.out.println(_store.stock_display());
+                System.out.println("Options:");
+                System.out.println("0. Logout admin");
+                System.out.println("1. Add product");
+                System.out.println("2. Delete product");
+                System.out.println("3. Add store");
+                System.out.println("4. Delete store");
+                System.out.println("5. Add client");
+                System.out.println("6. Delete client");
+                System.out.println();
 
-            int res = Final_prompt(_client, _store);
-            if (res == 0) {
-                System.out.println("Products were bought successfully!");
-                _done = true;
+                Scanner _scanner = new Scanner(System.in);
+                boolean b = false;
+                while(!b){
+                    System.out.print("Admin >> ");
+                    String _option = _scanner.nextLine();
+
+                    switch (_option){
+                        case "0":
+                            System.exit(0);
+                            break;
+                        case "1":
+                             String productName;
+                             String productProducer;
+                             int price;
+                             int limit;
+                             System.out.print("Product name: ");
+                             productName = _scanner.nextLine();
+                             System.out.print("Product producer: ");
+                            productProducer = _scanner.nextLine();
+                            System.out.print("Product price: ");
+                            price = _scanner.nextInt();
+                            System.out.print("Product limit: ");
+                            limit = _scanner.nextInt();
+                            Product newProduct=new Product(productName, productProducer, price, limit);
+                            _test_store_1.add_product(newProduct);
+
+                            //to do: display products from store
+
+                            break;
+                        case "2":
+                            String productName2 = "";
+                            String productProducer2 = "";
+                            int price2 = 0;
+                            int limit2 = 0;
+                            System.out.print("Product name: ");
+                            productName2 = _scanner.nextLine();
+                            Product newProduct2=new Product(productName2, productProducer2, price2, limit2);
+                            _test_store_1.remove_product(newProduct2);
+                            break;
+                        case "3":
+                            //b = UserManager.Register();
+                            break;
+                        case "4":
+                            //b = UserManager.Register();
+                            break;
+                        case "5":
+                            //b = UserManager.Register();
+                            break;
+                        case "6":
+                            //b = UserManager.Register();
+                            break;
+                        default:
+                            System.out.println("Error: " + _option + " is not an option");
+                    }
+                }
+
+            } else {
+                Client _client = (Client) user;
+                System.out.println(_client.toString());
+                System.out.println();
+
+                Store _store = Stores_prompt(_client, _stores);
+                if (_store == null)
+                    continue;
+                System.out.println(_store.stock_display());
+
+                int res = Final_prompt(_client, _store);
+                if (res == 0) {
+                    System.out.println("Products were bought successfully!");
+                    _done = true;
+                }
             }
         }
     }
