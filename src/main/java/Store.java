@@ -26,6 +26,10 @@ public class Store {
         return;
     }
 
+    public int getNrProducts(){
+        return this._mStock.size();
+    }
+
     public String stock_display(){
         String _rDescriptor="";
         _rDescriptor+="Store: ";
@@ -37,6 +41,7 @@ public class Store {
         _rDescriptor+="Products available: ";
         _rDescriptor+="\n";
         for (int i=0;i<this._mStock.size();i++){
+            _rDescriptor+=i + ". ";
             _rDescriptor+=this._mStock.get(i).details_returner();
             _rDescriptor+="\n";
         }
