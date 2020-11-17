@@ -44,8 +44,29 @@ class main {
                     System.out.println("Error: " + _option + " is not an option");
             }
         }
+        System.out.println();
 
         Client _client = new Client(UserManager.mClient);
         System.out.println(_client.toString());
+        System.out.println();
+
+        _client.addProductInCart(_test_product_1, 10);
+        _client.addProductInCart(_test_product_2, 20);
+        _client.addProductInCart(_test_product_1, 5);
+        _client.addProductInCart(_test_product_3, 2);
+        _client.removeProductFromCart(_test_product_2);
+        System.out.println(_client.CartToString());
+        System.out.println();
+
+        _client.addMoney(100);
+        System.out.println(_client.toString());
+        System.out.println();
+
+        _client.buyCart();
+        System.out.println(_client.toString());
+        System.out.println();
+
+        System.out.println(_client.CartToString());
+        System.out.println();
     }
 }
