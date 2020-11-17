@@ -12,6 +12,7 @@ public class Client extends User {
         this.mNume = mNume;
         this.mPrenume = mPrenume;
         this.mSumaBani = mSumaBani;
+        this.isAdmin = false;
     }
 
     public Client(Client c) {
@@ -19,6 +20,7 @@ public class Client extends User {
         this.mNume = c.mNume;
         this.mPrenume = c.mPrenume;
         this.mSumaBani = c.mSumaBani;
+        this.isAdmin = false;
     }
 
     public String getUsername(){
