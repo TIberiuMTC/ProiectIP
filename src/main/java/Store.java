@@ -38,6 +38,7 @@ public class Store {
         _rDescriptor+="\n";
         for (int i=0;i<this._mStock.size();i++){
             _rDescriptor+=this._mStock.get(i).details_returner();
+            _rDescriptor+="\n";
         }
         return _rDescriptor;
     }
