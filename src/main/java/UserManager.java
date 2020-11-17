@@ -51,6 +51,46 @@ public class UserManager {
         System.out.print("Password: ");
         String password = credentials_scanner.nextLine();
 
+        return checkCredentials(username, password);
+    }
+
+    public static boolean LogInAdmin(){
+        boolean isAdmin = false;
+        Scanner credentials_scanner = new Scanner(System.in);
+
+        System.out.print("Username: ");
+        String username = credentials_scanner.nextLine();
+
+        System.out.print("Password: ");
+        String password = credentials_scanner.nextLine();
+
+        try {
+            File fObj = new File("resources/admins.txt");
+            Scanner myReader = new Scanner(fObj);
+            while (myReader.hasNextLine()) {
+                String line = myReader.nextLine();
+                if(line.equals(username)) {
+                    isAdmin = true;
+
+                    break;
+                }
+            }
+            myReader.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        if(isAdmin == false){
+            System.out.println("Invalid admin user!");
+            return false;
+        }
+        return checkCredentials(username, password);
+    }
+
+    private static boolean checkCredentials(String username, String password){
+
         try {
             File fObj = new File("resources/users.txt");
             Scanner myReader = new Scanner(fObj);
