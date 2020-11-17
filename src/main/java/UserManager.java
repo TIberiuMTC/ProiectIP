@@ -57,8 +57,6 @@ public class UserManager {
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
                 String[] creds = line.split("\t");
-                System.out.println(creds[1]);
-                System.out.println(hashThisString(password));
                 if(creds[0].equals(username) && creds[1].equals(hashThisString(password))) {
                     mClient = new Client(creds[2], creds[3], Integer.parseInt(creds[4]), creds[0], creds[1]);
                     return true;

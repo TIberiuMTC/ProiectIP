@@ -25,14 +25,8 @@ public class Client {
         this.mPassword = c.mPassword;
     }
 
-    public int getMoney(){
-        return this.mSumaBani;
-    }
     public String getUsername(){
         return this.mUsername;
-    }
-    public void setMoney(int sum){
-        this.mSumaBani = sum;
     }
 
     @Override
