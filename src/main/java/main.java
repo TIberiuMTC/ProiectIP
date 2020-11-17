@@ -7,7 +7,8 @@ class main {
         System.out.println("Options:");
         System.out.println("0. Exit program");
         System.out.println("1. Log in");
-        System.out.println("2. Register");
+        System.out.println("2. Log in as admin");
+        System.out.println("3. Register");
         System.out.println();
 
         Scanner _scanner = new Scanner(System.in);
@@ -25,6 +26,9 @@ class main {
                     _done = UserManager.LogIn();
                     break;
                 case "2":
+                    _done = UserManager.LogInAdmin();
+                    break;
+                case "3":
                     _done = UserManager.Register();
                     break;
                 default:

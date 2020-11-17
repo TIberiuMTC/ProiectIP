@@ -1,28 +1,24 @@
 import java.io.*;
 
-public class Client {
+public class Client extends User {
     private String mNume;
     private String mPrenume;
     private int mSumaBani;
-    private String mUsername;
-    private String mPassword;
 
     private Cart mCart = new Cart();
 
     public Client(String mNume, String mPrenume, int mSumaBani, String mUsername, String mPassword) {
+        super(mUsername, mPassword);
         this.mNume = mNume;
         this.mPrenume = mPrenume;
         this.mSumaBani = mSumaBani;
-        this.mUsername = mUsername;
-        this.mPassword = mPassword;
     }
 
     public Client(Client c) {
+        super(c.mUsername, c.mPassword);
         this.mNume = c.mNume;
         this.mPrenume = c.mPrenume;
         this.mSumaBani = c.mSumaBani;
-        this.mUsername = c.mUsername;
-        this.mPassword = c.mPassword;
     }
 
     public String getUsername(){
