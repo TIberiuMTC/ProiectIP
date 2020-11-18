@@ -140,7 +140,7 @@ public class UserManager {
         return false;
     }
 
-    public static boolean Register()
+    public static boolean Register(boolean isAdmin)
     {
         Scanner credentials_scanner = new Scanner(System.in);
 
@@ -165,8 +165,12 @@ public class UserManager {
             FileWriter fw = new FileWriter("resources/users.txt", true);
             fw.write(username + "\t" + hashThisString(password) + "\t" + nume + "\t" + prenume + "\t" + "0\n");
             fw.close();
-            mUser = new Client(nume, prenume,0, username, hashThisString(password));
-            return true;
+            if(isAdmin){
+                return false;
+            }else{
+                mUser = new Client(nume, prenume,0, username, hashThisString(password));
+                return true;
+            }
         }
         catch (IOException e) {
             System.out.println("An error occurred.");
