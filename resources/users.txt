@@ -1,3 +1,5 @@
 cris	83592796bc17705662dc9a750c8b6d0a4fd93396	Scraba	Cristian	210
 mihaitza	5b1f356646c24bf1765f6f1b65aea3bde7247e1	Mihai	Tiberiu	56
 admin	d033e22ae348aeb5660fc2140aec35850c4da997	admin	admin	0
+
+test2	a94a8fe5ccb19ba61c4c0873d391e987982fbbd3	test	test	0

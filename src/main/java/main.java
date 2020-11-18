@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -29,7 +31,7 @@ class main {
                     _done = UserManager.LogInAdmin();
                     break;
                 case "3":
-                    _done = UserManager.Register();
+                    _done = UserManager.Register(false);
                     break;
                 default:
                     System.out.println("Error: " + _option + " is not an option");
@@ -182,46 +184,101 @@ class main {
                         case "0":
                             System.exit(0);
                             break;
-                        case "1":
-                             String productName;
-                             String productProducer;
-                             int price;
-                             int limit;
-                             System.out.print("Product name: ");
-                             productName = _scanner.nextLine();
-                             System.out.print("Product producer: ");
+                        case "1":   //add product
+                            String productName;
+                            String productProducer;
+                            String storeName;
+                            int price;
+                            int limit;
+
+                            System.out.print("Store name: ");
+                            storeName = _scanner.nextLine();
+                            System.out.print("Product name: ");
+                            productName = _scanner.nextLine();
+                            System.out.print("Product producer: ");
                             productProducer = _scanner.nextLine();
                             System.out.print("Product price: ");
                             price = _scanner.nextInt();
                             System.out.print("Product limit: ");
                             limit = _scanner.nextInt();
+                            _scanner.nextLine();
+
                             Product newProduct=new Product(productName, productProducer, price, limit);
                             _test_store_1.add_product(newProduct);
-
-                            //to do: display products from store
+                            System.out.println("\nProduct added successfully!\n");
 
                             break;
-                        case "2":
+                        case "2":   //remove product
                             String productName2 = "";
                             String productProducer2 = "";
                             int price2 = 0;
                             int limit2 = 0;
+
                             System.out.print("Product name: ");
                             productName2 = _scanner.nextLine();
+
                             Product newProduct2=new Product(productName2, productProducer2, price2, limit2);
                             _test_store_1.remove_product(newProduct2);
+                            System.out.println("\nProduct removed successfully!\n");
+
                             break;
-                        case "3":
-                            //b = UserManager.Register();
+                        case "3":   //add store
+                            String storeName3 = "";
+                            String storeAddress2 = "";
+                            String productName3 = "";
+                            String productProducer3 = "";
+                            int price3 = 0;
+                            int limit3 = 0;
+
+                            System.out.print("Store name: ");
+                            storeName3 = _scanner.nextLine();
+                            System.out.print("Store address: ");
+                            storeAddress2 = _scanner.nextLine();
+
+                            Product newProduct3=new Product(productName3, productProducer3, price3, limit3);
+                            Store newStore=new Store(newProduct3,storeName3,storeAddress2);
+                            _stores.add(newStore);
+
+                            //display
+                            for (int i = 0; i < _stores.size();i++) {
+                                Store currentStore = _stores.get(i);
+                                System.out.println(currentStore.get_mStoreName());
+                            }
+
                             break;
-                        case "4":
-                            //b = UserManager.Register();
+                        case "4":   //remove store
+                            String storeName4 = "";
+                            int ok = 0;
+
+                            System.out.print("Store name: ");
+                            storeName4 = _scanner.nextLine();
+
+                            for (int i = 0; i < _stores.size();i++) {
+                                Store currentStore = _stores.get(i);
+                                if(currentStore.get_mStoreName().equals(storeName4)){
+                                    _stores.remove(i);
+                                    ok = 1;
+                                }
+                            }
+
+                            if(ok == 0){
+                                System.out.println("\nStore doesn't exist!\n");
+                                break;
+                            }
+
+                            //display
+                            for (int i = 0; i < _stores.size();i++) {
+                                Store currentStore = _stores.get(i);
+                                System.out.println(currentStore.get_mStoreName());
+                            }
+
                             break;
-                        case "5":
-                            //b = UserManager.Register();
+                        case "5":   //add client
+                            b = UserManager.Register(true);
+                            System.out.println("\nClient has been added!\n");
                             break;
-                        case "6":
-                            //b = UserManager.Register();
+                        case "6":   //remove client
+                            b = Admin.DeleteClient();
                             break;
                         default:
                             System.out.println("Error: " + _option + " is not an option");
